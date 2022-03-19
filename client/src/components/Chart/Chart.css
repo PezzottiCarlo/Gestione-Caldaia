@@ -1,0 +1,11 @@
+.custom-tooltip{
+    background-color: #393f49;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: left;
+}
+.custom-tooltip-data{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

@@ -1,0 +1,35 @@
+
+.device{
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+    width: 100%;
+    min-width: 20rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    text-align: center;
+    transition: all 5s;
+}
+
+.sensor{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.title{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+.title .modify{
+    cursor: pointer;
+    margin-left: 1rem;
+}
+
+.chart{
+    transition: all 5s;
+}
