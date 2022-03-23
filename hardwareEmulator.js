@@ -9,11 +9,12 @@ let temperature = 20;
 
 function send() {
     humidity += getRandomNumber(-3,3);
+    temperature += getRandomNumber(-3,3);
     if(humidity > 100)humidity = 100;
     if(humidity < 0)humidity = 0;
     if(temperature >= 100)temperature = 20;
     if(temperature <= 0)temperature = 20;
-    temperature += getRandomNumber(-3,3);
+    
     let data = {
         mac: "00:00:00:00:00:00",
         sensors: {

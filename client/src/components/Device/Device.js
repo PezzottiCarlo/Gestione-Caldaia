@@ -22,7 +22,7 @@ const Device = (props) => {
 
   const showChart = async () => {
     toggleChart(!chart);
-    setChartData(await Util.filterChartData(await Util.getChartData(props.mac), chartDataPicker[0].id));
+    setChartData(await Util.filterChartData(await Util.getChartData(props.mac), chartDataPicker[0].id,chartDataPicker[0].precision));
   }
 
   const removeDevice = () => {
@@ -35,8 +35,8 @@ const Device = (props) => {
       items[i].classList.remove("active");
       if (items[i].getAttribute("data-index") === e.target.getAttribute("data-index")) {
         items[i].classList.add("active");
-        console.log(chartDataPicker[items[i].getAttribute("data-index")].value);
-        setChartData(await Util.filterChartData(await Util.getChartData(props.mac),items[i].getAttribute("data-index")));
+        let id = Number(items[i].getAttribute("data-index"));
+        setChartData(await Util.filterChartData(await Util.getChartData(props.mac),id,chartDataPicker[id].precision));
       }
     }
   }
@@ -83,7 +83,7 @@ const Device = (props) => {
                 {
                   chartDataPicker.map((item, index) => {
                     return (
-                      <li className={`chart-buttons-list-item ${(index === 0) ? "active" : ""}`} data-index={item.id} onClick={listClicking}>{item.label}</li>
+                      <li className={`chart-buttons-list-item ${(index === 0) ? "active" : ""}`} data-index={index} onClick={listClicking}>{item.label}</li>
                     )
                   })
                 }

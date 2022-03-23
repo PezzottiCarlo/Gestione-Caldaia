@@ -1,6 +1,7 @@
 const express = require('express')
 let cors = require('cors')
 let util = require('./util')
+let database = require('./db')
 
 const config = require('./config.json')
 const app = express()

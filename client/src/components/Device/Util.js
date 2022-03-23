@@ -22,27 +22,68 @@ class Util {
         return await res.json();
     }
 
-    static filterChartData = async (data, id) => {    
+    static filterChartData = async (data, id, precision) => {
+        console.log(data);
         let pickers = await Util.getDataPicker();
-        if(pickers[id].value === -1){
-            return data;
+        if (pickers[id].value === -1) {
+            return Util.sortChartDataByDate(data);
         }
         const date1 = new Date();
         const date2 = new Date();
-        date1.setDate(date1.getDate()-pickers[id].value+1);
+        date1.setDate(date1.getDate() - pickers[id].value + 1);
         date1.setHours(0, 0, 0, 0);
         date2.setHours(23, 59, 59, 999);
-        return Util.getChartByRange(data, date1, date2);
+        return Util.getChartByRange(Util.sortChartDataByDate(data), date1, date2, precision);
     }
 
-    static getChartByRange = (chartData, startDate, endDate) => {
+    static getChartByRange = (chartData, startDate, endDate, precision) => {
         let tmpChartData = [];
+
+        let previousDate = null;
+        let temps = [];
+        let humidity = [];
+
         for (let i = 0; i < chartData.length; i++) {
             if (new Date(chartData[i].date) >= startDate && new Date(chartData[i].date) <= endDate) {
-                tmpChartData.push(chartData[i]);
+                if (precision === "D") {
+                    if (previousDate === null) {
+                        previousDate = new Date(chartData[i].date);
+                    }
+                    if(previousDate.getDate() !== new Date(chartData[i].date).getDate()) {
+                        tmpChartData.push({
+                            date: previousDate,
+                            temperature: Util.avarege(temps),
+                            humidity: Util.avarege(humidity)
+                        });
+                        temps = [];
+                        humidity = [];          
+                        temps.push(chartData[i].temperature);
+                        humidity.push(chartData[i].humidity);
+                        previousDate = new Date(chartData[i].date);
+                    }else{
+                        temps.push(chartData[i].temperature);
+                        humidity.push(chartData[i].humidity);
+                    }
+                }else if(precision === "H"){
+                    tmpChartData.push(chartData[i]);
+                }
             }
         }
         return tmpChartData;
+    }
+
+    static avarege = (data) => {
+        let sum = 0;
+        for (let i = 0; i < data.length; i++) {
+            sum += data[i];
+        }
+        return Math.floor(sum / data.length);
+    }
+
+    static sortChartDataByDate(data) {
+        return data.sort((a, b) => {
+            return new Date(a.date) - new Date(b.date);
+        });
     }
 
     static getDataPicker = async () => {

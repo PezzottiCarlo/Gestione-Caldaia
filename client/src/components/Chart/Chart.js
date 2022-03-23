@@ -22,7 +22,7 @@ const Chart = (props) => {
                         top: 20, right: 40, bottom: 20, left: 0,
                     }}>
                     <CartesianGrid stroke="#434a57" strokeDasharray="3 3" />
-                    <XAxis dataKey="date" tick={{ fontSize: 10 }} tickFormatter={
+                    <XAxis dataKey="date"  tick={{ fontSize: 10 }} tickFormatter={
                         (time) => {
                             new Date(time)
                             return new Date(time).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })

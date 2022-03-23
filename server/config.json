@@ -2,32 +2,42 @@
     "database": "devicesLog.db",
     "loggingInterval": 30,
     "defaultDeviceName": "Unknown Device",
-    "dataPicker":[
+    "dataPicker": [
         {
-            "label":"1G",
-            "id":0,
-            "changeDate":true,
-            "value":1
-        },{
-            "label":"5G",
-            "id":1,
-            "changeDate":true,
-            "value":5
-        },{
-            "label":"1M",
-            "id":2,
-            "changeDate":true,
-            "value":30
-        },{
-            "label":"1A",
-            "id":3,
-            "changeDate":true,
-            "value":365
-        },{
-            "label":"MAX",
-            "id":4,
-            "changeDate":false,
-            "value":-1
+            "label": "1G",
+            "changeDate": true,
+            "value": 1,
+            "precision": "H"
+        },
+        {
+            "label": "5G",
+            "changeDate": true,
+            "value": 5,
+            "precision": "H"
+        },
+        {
+            "label": "1M",
+            "changeDate": true,
+            "value": 30,
+            "precision": "D"
+        },
+        {
+            "label": "6M",
+            "changeDate": true,
+            "value": 180,
+            "precision": "D"
+        },
+        {
+            "label": "1A",
+            "changeDate": true,
+            "value": 365,
+            "precision": "D"
+        },
+        {
+            "label": "MAX",
+            "changeDate": false,
+            "value": -1,
+            "precision": "D"
         }
     ]
 }
