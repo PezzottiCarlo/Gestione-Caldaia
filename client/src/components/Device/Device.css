@@ -2,8 +2,7 @@
 .device{
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 1rem;
-    width: 100%;
-    min-width: 20rem;
+    width: 30rem;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     text-align: center;

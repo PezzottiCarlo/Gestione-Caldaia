@@ -28,7 +28,7 @@ const Chart = (props) => {
                             if(props.precision === "H")
                                 return new Date(time).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })
                             else if(props.precision === "D")
-                                return new Date(time).toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit' })
+                                return new Date(time).toLocaleDateString('it-IT', { day: '2-digit', month: 'long' })
                         }
                     } />
                     <YAxis />
