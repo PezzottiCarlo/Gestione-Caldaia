@@ -1,6 +1,6 @@
 import "./Device.css";
 
-import React, { useState } from 'react';
+import React, { useState,useEffect} from 'react';
 import Chart from '../Chart/Chart';
 import ArcProgress from 'react-arc-progress';
 import Util from './Util';
@@ -9,27 +9,20 @@ import Util from './Util';
 const Device = (props) => {
 
   let [chart, toggleChart] = useState(false);
-  let [chartDataPicker, setChartDataPicker] = useState([]);
+  let [chartDataPicker, setChartDataPicker] = useState(null);
   let [chartData, setChartData] = useState([]);
 
-  let data = Util.convertTZ(props.data, "Europe/Zurich");
-  let date = Util.getFormattedData(data);
-  let now = new Date();
-  let active = (data.getHours() === now.getHours() && (now.getMinutes() - data.getMinutes()) < 10);
+  useEffect(async () => {
+    setChartDataPicker(await Util.getDataPicker());
+  } , []);
 
   const changeName = () => {
     Util.changeName(props.mac);
   }
 
   const showChart = async () => {
-    let data = [];
-    if (chartData.length === 0) {
-      let tmpChartDataPicker = await Util.getDataPicker();
-      setChartDataPicker(tmpChartDataPicker)
-      data = await Util.getChartData(props.mac);
-    }
     toggleChart(!chart);
-    setChartData(Util.getDay(data, new Date()));
+    setChartData(await Util.filterChartData(await Util.getChartData(props.mac), chartDataPicker[0].id));
   }
 
   const removeDevice = () => {
@@ -37,12 +30,13 @@ const Device = (props) => {
   }
 
   const listClicking = async (e) => {
-    console.log(chartData)
     let items = e.target.parentElement.getElementsByClassName("chart-buttons-list-item");
     for (let i = 0; i < items.length; i++) {
       items[i].classList.remove("active");
       if (items[i].getAttribute("data-index") === e.target.getAttribute("data-index")) {
         items[i].classList.add("active");
+        console.log(chartDataPicker[items[i].getAttribute("data-index")].value);
+        setChartData(await Util.filterChartData(await Util.getChartData(props.mac),items[i].getAttribute("data-index")));
       }
     }
   }
@@ -53,7 +47,7 @@ const Device = (props) => {
         <h2>{props.name}</h2>
         <span onClick={changeName} className="modify">✏️</span>
         <span onClick={showChart} className="modify">📈</span>
-        {active ? "" : <span onClick={removeDevice} className="modify">🗑️</span>}
+        <span onClick={removeDevice} className="modify">🗑️</span>
       </div>
       <div className="body">
         <div className="sensor">
@@ -77,7 +71,7 @@ const Device = (props) => {
           </div>
         </div>
         <div className="sensor-date">
-          <h3>{(date === "ora") ? "Aggiornato ora" : `Aggiornato ${date} fa`}</h3>
+          <h3>{(Util.getFormattedData(Util.convertTZ(props.data, "Europe/Zurich")) === "ora") ? "Aggiornato ora" : `Aggiornato ${Util.getFormattedData(Util.convertTZ(props.data, "Europe/Zurich"))} fa`}</h3>
         </div>
       </div>
       {
@@ -89,7 +83,7 @@ const Device = (props) => {
                 {
                   chartDataPicker.map((item, index) => {
                     return (
-                      <li className={`chart-buttons-list-item ${(index === 0) ? "active" : ""}`} data-index={item.value} onClick={listClicking}>{item.label}</li>
+                      <li className={`chart-buttons-list-item ${(index === 0) ? "active" : ""}`} data-index={item.id} onClick={listClicking}>{item.label}</li>
                     )
                   })
                 }

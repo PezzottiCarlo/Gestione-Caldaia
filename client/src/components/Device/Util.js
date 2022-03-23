@@ -22,19 +22,27 @@ class Util {
         return await res.json();
     }
 
-    static filterChartData = (data, type) => {
-
+    static filterChartData = async (data, id) => {    
+        let pickers = await Util.getDataPicker();
+        if(pickers[id].value === -1){
+            return data;
+        }
+        const date1 = new Date();
+        const date2 = new Date();
+        date1.setDate(date1.getDate()-pickers[id].value+1);
+        date1.setHours(0, 0, 0, 0);
+        date2.setHours(23, 59, 59, 999);
+        return Util.getChartByRange(data, date1, date2);
     }
 
-    static getDay = (data,date) => {
-        let result = [];    
-        for (let i = 0; i < data.length; i++) {
-            let tmp = new Date(data[i].date);
-            if (tmp.getDate() === date.getDate() && tmp.getMonth() === date.getMonth() && tmp.getFullYear() === date.getFullYear()) {
-                result.push(data[i]);
+    static getChartByRange = (chartData, startDate, endDate) => {
+        let tmpChartData = [];
+        for (let i = 0; i < chartData.length; i++) {
+            if (new Date(chartData[i].date) >= startDate && new Date(chartData[i].date) <= endDate) {
+                tmpChartData.push(chartData[i]);
             }
         }
-        return result;
+        return tmpChartData;
     }
 
     static getDataPicker = async () => {

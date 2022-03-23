@@ -5,24 +5,29 @@
     "dataPicker":[
         {
             "label":"1G",
-            "value":1,
-            "changeDate":true
+            "id":0,
+            "changeDate":true,
+            "value":1
         },{
             "label":"5G",
-            "value":2,
-            "changeDate":true
+            "id":1,
+            "changeDate":true,
+            "value":5
         },{
             "label":"1M",
-            "value":3,
-            "changeDate":true
+            "id":2,
+            "changeDate":true,
+            "value":30
         },{
             "label":"1A",
-            "value":4,
-            "changeDate":true
+            "id":3,
+            "changeDate":true,
+            "value":365
         },{
             "label":"MAX",
-            "value":5,
-            "changeDate":false
+            "id":4,
+            "changeDate":false,
+            "value":-1
         }
     ]
 }
