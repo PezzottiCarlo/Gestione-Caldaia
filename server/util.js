@@ -13,15 +13,6 @@ class Util {
     }
 
     /**
-     * Metodo che ritorna i log di un dispositivo
-     * @param {*} mac 
-     * @returns 
-     */
-    static getLog(mac) {
-        return Database.getLog(mac);
-    }
-
-    /**
      * Metodo che ritorna i gli ultimi log di tutti i dispositivi
      * @param {*} name 
      * @returns 
@@ -127,6 +118,16 @@ class Util {
         let d1 = new Date(date1);
         let d2 = new Date(date2);
         return (d1.getTime() === d2.getTime())
+    }
+
+    /*CHART METHODS */
+    /**
+     * Metodo che ritorna i log di un dispositivo
+     * @param {*} mac 
+     * @returns 
+     */
+     static getChartData(mac) {
+        return Database.getLog(mac);
     }
 }
 module.exports = Util;

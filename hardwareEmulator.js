@@ -1,15 +1,24 @@
 let fetch = require('node-fetch');
 
-function getRandom() {
-    return Math.floor(Math.random() * (100 - 1 + 1)) + 1;
+function getRandomNumber(min,max) {
+    return Math.floor(Math.random()*(max-min+1)+min);
 }
 
+let humidity = 20;
+let temperature = 20;
+
 function send() {
+    humidity += getRandomNumber(-3,3);
+    if(humidity > 100)humidity = 100;
+    if(humidity < 0)humidity = 0;
+    if(temperature >= 100)temperature = 20;
+    if(temperature <= 0)temperature = 20;
+    temperature += getRandomNumber(-3,3);
     let data = {
-        mac: "00:00:00:00:00:01",
+        mac: "00:00:00:00:00:00",
         sensors: {
-            humidity: getRandom(),
-            temperature: getRandom(),
+            humidity: humidity,
+            temperature: temperature,
         }
     }
     fetch('http://localhost:8080/', {
@@ -20,4 +29,4 @@ function send() {
         body: JSON.stringify(data)
     })
     console.log("Inviato")
-} setInterval(send, 200)
+} setInterval(send, 200);

@@ -10,11 +10,6 @@ class Util {
         ]
     };
 
-    static getLog = async (mac) => {
-        let res = await fetch('get?mac=' + mac);
-        return await res.json();  
-    }
-
     static HUMID_GRADIENT = {
         gradient: [
             "#0E86D4",
@@ -22,28 +17,59 @@ class Util {
         ]
     };
 
-    static convertTZ = (date, tzString) => {
-        return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", { timeZone: tzString }));
+    static getChartData = async (mac) => {
+        let res = await fetch(`getChartData/?mac=${mac}`);
+        return await res.json();
+    }
+
+    static filterChartData = (data, type) => {
+
+    }
+
+    static getDay = (data,date) => {
+        let result = [];    
+        for (let i = 0; i < data.length; i++) {
+            let tmp = new Date(data[i].date);
+            if (tmp.getDate() === date.getDate() && tmp.getMonth() === date.getMonth() && tmp.getFullYear() === date.getFullYear()) {
+                result.push(data[i]);
+            }
+        }
+        return result;
+    }
+
+    static getDataPicker = async () => {
+        let res = await fetch('getDataPicker');
+        return await res.json();
     }
 
     static getFormattedData = (data) => {
         let diffTime = Math.abs(new Date() - data);
-        if(diffTime/1000 < 60){
-            return Math.round(diffTime/1000) + " secondi";
-        }else if(diffTime/1000 < 3600){
-            return Math.round(diffTime/60/1000) + " minuti";
-        }else if(diffTime/1000 < 86400){
-            return Math.round(diffTime/3600/1000) + " ore";
-        }else if(diffTime/1000 < 604800){
-            return Math.round(diffTime/86400/1000) + " giorni";
-        }else if(diffTime/1000 < 2419200){
-            return Math.round(diffTime/604800/1000) + " settimane";
-        }else if(diffTime/1000 < 31536000){
-            return Math.round(diffTime/2419200/1000) + " mesi";
-        }else if(diffTime/1000 < 315360000){
-            return Math.round(diffTime/31536000/1000) + " anni";
+        if (diffTime / 1000 < 60) {
+            if (Math.round(diffTime / 1000) > 5)
+                return Math.round(diffTime / 1000) + " secondi";
+            else
+                return "ora";
+        } else if (diffTime / 1000 < 3600) {
+            return Math.round(diffTime / 60 / 1000) + " minuti";
+        } else if (diffTime / 1000 < 86400) {
+            return Math.round(diffTime / 3600 / 1000) + " ore";
+        } else if (diffTime / 1000 < 604800) {
+            return Math.round(diffTime / 86400 / 1000) + " giorni";
+        } else if (diffTime / 1000 < 2419200) {
+            return Math.round(diffTime / 604800 / 1000) + " settimane";
+        } else if (diffTime / 1000 < 31536000) {
+            return Math.round(diffTime / 2419200 / 1000) + " mesi";
+        } else if (diffTime / 1000 < 315360000) {
+            return Math.round(diffTime / 31536000 / 1000) + " anni";
         }
     }
+
+
+
+    static convertTZ = (date, tzString) => {
+        return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", { timeZone: tzString }));
+    }
+
 
     static changeName = (mac) => {
         swal({

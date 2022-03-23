@@ -1,5 +1,28 @@
 {
     "database": "devicesLog.db",
     "loggingInterval": 30,
-    "defaultDeviceName": "Unknown Device"
+    "defaultDeviceName": "Unknown Device",
+    "dataPicker":[
+        {
+            "label":"1G",
+            "value":1,
+            "changeDate":true
+        },{
+            "label":"5G",
+            "value":2,
+            "changeDate":true
+        },{
+            "label":"1M",
+            "value":3,
+            "changeDate":true
+        },{
+            "label":"1A",
+            "value":4,
+            "changeDate":true
+        },{
+            "label":"MAX",
+            "value":5,
+            "changeDate":false
+        }
+    ]
 }

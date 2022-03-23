@@ -9,6 +9,7 @@ import Util from './Util';
 const Device = (props) => {
 
   let [chart, toggleChart] = useState(false);
+  let [chartDataPicker, setChartDataPicker] = useState([]);
   let [chartData, setChartData] = useState([]);
 
   let data = Util.convertTZ(props.data, "Europe/Zurich");
@@ -23,14 +24,27 @@ const Device = (props) => {
   const showChart = async () => {
     let data = [];
     if (chartData.length === 0) {
-      data = await Util.getLog(props.mac);
+      let tmpChartDataPicker = await Util.getDataPicker();
+      setChartDataPicker(tmpChartDataPicker)
+      data = await Util.getChartData(props.mac);
     }
     toggleChart(!chart);
-    setChartData(data);
+    setChartData(Util.getDay(data, new Date()));
   }
 
   const removeDevice = () => {
     Util.removeDevice(props.mac);
+  }
+
+  const listClicking = async (e) => {
+    console.log(chartData)
+    let items = e.target.parentElement.getElementsByClassName("chart-buttons-list-item");
+    for (let i = 0; i < items.length; i++) {
+      items[i].classList.remove("active");
+      if (items[i].getAttribute("data-index") === e.target.getAttribute("data-index")) {
+        items[i].classList.add("active");
+      }
+    }
   }
 
   return (
@@ -63,10 +77,26 @@ const Device = (props) => {
           </div>
         </div>
         <div className="sensor-date">
-          <h3>Aggiornato {date} fa</h3>
+          <h3>{(date === "ora") ? "Aggiornato ora" : `Aggiornato ${date} fa`}</h3>
         </div>
       </div>
-      {chart ? <Chart className="chart" data={chartData}></Chart> : ""}
+      {
+        chart ?
+          <div>
+            <Chart className="chart" data={chartData}></Chart>
+            <div className="chart-buttons">
+              <ul className="chart-buttons-list">
+                {
+                  chartDataPicker.map((item, index) => {
+                    return (
+                      <li className={`chart-buttons-list-item ${(index === 0) ? "active" : ""}`} data-index={item.value} onClick={listClicking}>{item.label}</li>
+                    )
+                  })
+                }
+              </ul>
+            </div>
+          </div>
+          : ""}
     </div>
   );
 };

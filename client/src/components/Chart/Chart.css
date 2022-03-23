@@ -9,3 +9,36 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+.chart-empty{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    width: 100%;
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.chart-buttons-list{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    list-style: none;
+}
+
+.chart-buttons-list li{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: #393f49;
+    color: #fff;
+    cursor: pointer;
+}
+.chart-buttons-list .active{
+    background-color: #fff;
+    color: #393f49;
+}

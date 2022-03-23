@@ -43,11 +43,6 @@ app.post('/', (req, res) => {
     res.sendStatus(200);
 })
 
-app.get('/get', (req, res) => {
-    let mac = req.query.mac;
-    res.send(util.getLog(mac));
-})
-
 app.get('/getName', (req, res) => {
     let mac = req.query.mac;
     let name = util.getName(mac);
@@ -67,6 +62,10 @@ app.get('/getCurrent', (req, res) => {
     }
 })
 
+app.get('/getDataPicker', (req, res) => {
+    res.json(config.dataPicker);
+})
+
 app.get('/changeName', (req, res) => {
     let name = req.query.name;
     let mac = req.query.mac;
@@ -83,5 +82,12 @@ app.get('/removeDevice', (req, res) => {
         res.send(result);
     }
 })
+
+/* CHART GETTERS */
+app.get('/getChartData', (req, res) => {
+    let mac = req.query.mac;
+    res.send(util.getChartData(mac));
+})
+
 
 
