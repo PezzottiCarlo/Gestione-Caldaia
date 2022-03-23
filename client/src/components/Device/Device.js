@@ -11,6 +11,7 @@ const Device = (props) => {
   let [chart, toggleChart] = useState(false);
   let [chartDataPicker, setChartDataPicker] = useState(null);
   let [chartData, setChartData] = useState([]);
+  let [chartDataPrecision, setChartDataPrecision] = useState("D");
 
   useEffect(async () => {
     setChartDataPicker(await Util.getDataPicker());
@@ -36,6 +37,7 @@ const Device = (props) => {
       if (items[i].getAttribute("data-index") === e.target.getAttribute("data-index")) {
         items[i].classList.add("active");
         let id = Number(items[i].getAttribute("data-index"));
+        setChartDataPrecision(chartDataPicker[id].precision);
         setChartData(await Util.filterChartData(await Util.getChartData(props.mac),id,chartDataPicker[id].precision));
       }
     }
@@ -77,7 +79,7 @@ const Device = (props) => {
       {
         chart ?
           <div>
-            <Chart className="chart" data={chartData}></Chart>
+            <Chart className="chart" precision={chartDataPrecision}  data={chartData}></Chart>
             <div className="chart-buttons">
               <ul className="chart-buttons-list">
                 {
