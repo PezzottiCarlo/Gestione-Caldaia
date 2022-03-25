@@ -1,5 +1,5 @@
 # GestioneCaldaia
-Project for displaying temperature and humidity of a boiler
+Project for displaying temperature and humidity of a boiler.
 
 To install (server / client):
 For the server part I used nodejs.
