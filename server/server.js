@@ -5,7 +5,6 @@ let database = require('./db')
 
 const config = require('./config.json')
 const app = express()
-const port = 8080
 let logger;
 
 
@@ -13,8 +12,8 @@ app.use(cors())
 app.use(express.json());
 app.use("/", express.static("../build"))
 
-app.listen(port, '0.0.0.0', () => {
-    console.log(`Server run on ${port}`)
+app.listen(config.port, '0.0.0.0', () => {
+    console.log(`Server run on ${config.port}`)
     init()
 })
 
@@ -25,7 +24,6 @@ function init() {
     util.log()
     logger = setInterval(() => { util.log() }, 1000 * 60 * config.loggingInterval)
 }
-
 
 
 app.post('/', (req, res) => {
