@@ -2,6 +2,7 @@
     "database": "devicesLog.db",
     "loggingInterval": 30,
     "defaultDeviceName": "Unknown Device",
+    "port": 8080,
     "dataPicker": [
         {
             "label": "1G",
